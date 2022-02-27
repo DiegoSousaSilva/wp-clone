@@ -1,9 +1,19 @@
 import { useState, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View, LogBox } from "react-native";
 import { useAssets } from "expo-asset";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SignIn from "./src/screens/SignIn";
+import ContextWrapper from "./src/context/ContextWrapper";
+
+LogBox.ignoreLogs([
+  "Setting a time",
+  "AsyncStorage has been extracted from react-native core and will be removed in a release.",
+]);
+
+const Stack = createNativeStackNavigator();
 
 function App() {
   const [currUser, setCurrUser] = useState(null);
@@ -24,21 +34,20 @@ function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>{JSON.stringify(currUser)}</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {!currUser ? (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="signIn" component={SignIn} />
+        </Stack.Navigator>
+      ) : (
+        <View>
+          <Text>Hi user!</Text>
+          <Text>{JSON.stringify(currUser)}</Text>
+        </View>
+      )}
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 function Main() {
   const [assets] = useAssets(
@@ -50,7 +59,11 @@ function Main() {
   if (!assets) {
     return <Text>Loading ...</Text>;
   }
-  return <App />;
+  return (
+    <ContextWrapper>
+      <App />
+    </ContextWrapper>
+  );
 }
 
 export default Main;
