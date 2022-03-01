@@ -16,6 +16,7 @@ import { auth, db } from "../../firebase";
 import { updateProfile } from "@firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
+import Loading from "./Loading";
 
 const Profile = () => {
   const [displayName, setDisplayName] = useState("");
@@ -69,7 +70,7 @@ const Profile = () => {
   }
 
   if (!permissionStatus) {
-    return <Text>Loading ...</Text>;
+    return <Loading />;
   }
   if (permissionStatus !== "granted") {
     return <Text>You need to alow this permission</Text>;

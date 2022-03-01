@@ -10,6 +10,7 @@ import ContextWrapper from "./src/context/ContextWrapper";
 import Context from "./src/context/Context";
 import Profile from "./src/screens/Profile";
 import Home from "./src/screens/Home";
+import Loading from "./src/screens/Loading";
 
 LogBox.ignoreLogs([
   "Setting a time",
@@ -36,7 +37,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <Text>Loading ...</Text>;
+    return <Loading />;
   }
 
   return (
@@ -82,7 +83,7 @@ function Main() {
     require("./assets/welcome-img.png")
   );
   if (!assets) {
-    return <Text>Loading ...</Text>;
+    return <Loading />;
   }
   return (
     <ContextWrapper>
