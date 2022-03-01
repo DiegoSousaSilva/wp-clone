@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Text, View, LogBox } from "react-native";
 import { useAssets } from "expo-asset";
 import { onAuthStateChanged } from "firebase/auth";
@@ -7,6 +7,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignIn from "./src/screens/SignIn";
 import ContextWrapper from "./src/context/ContextWrapper";
+import Context from "./src/context/Context";
+import Profile from "./src/screens/Profile";
+import Home from "./src/screens/Home";
 
 LogBox.ignoreLogs([
   "Setting a time",
@@ -18,6 +21,9 @@ const Stack = createNativeStackNavigator();
 function App() {
   const [currUser, setCurrUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const {
+    theme: { colors },
+  } = useContext(Context);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -40,10 +46,29 @@ function App() {
           <Stack.Screen name="signIn" component={SignIn} />
         </Stack.Navigator>
       ) : (
-        <View>
-          <Text>Hi user!</Text>
-          <Text>{JSON.stringify(currUser)}</Text>
-        </View>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: colors.foreground,
+              shadowOpacity: 0,
+              elevation: 0,
+            },
+            headerTintColor: colors.white,
+          }}
+        >
+          {!currUser.displayName && (
+            <Stack.Screen
+              name="profile"
+              component={Profile}
+              options={{ headerShown: false }}
+            />
+          )}
+          <Stack.Screen
+            name="home"
+            options={{ title: "Whatsapp" }}
+            component={Home}
+          />
+        </Stack.Navigator>
       )}
     </NavigationContainer>
   );
