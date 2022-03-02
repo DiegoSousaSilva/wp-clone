@@ -69,6 +69,11 @@ function App() {
             options={{ title: "Whatsapp" }}
             component={Home}
           />
+          <Stack.Screen
+            name="contacs"
+            options={{ title: "Select Contacts" }}
+            component={Contacts}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>
