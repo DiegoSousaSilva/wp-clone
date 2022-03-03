@@ -1,16 +1,17 @@
 import { useState, useEffect, useContext } from "react";
-import { Text, View, LogBox } from "react-native";
+import { LogBox } from "react-native";
 import { useAssets } from "expo-asset";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SignIn from "./src/screens/SignIn";
 import ContextWrapper from "./src/context/ContextWrapper";
 import Context from "./src/context/Context";
 import Profile from "./src/screens/Profile";
 import Home from "./src/screens/Home";
 import Loading from "./src/screens/Loading";
+import Contacts from "./src/screens/Contacts";
+import SignIn from "./src/screens/SignIn";
 
 LogBox.ignoreLogs([
   "Setting a time",
@@ -70,7 +71,7 @@ function App() {
             component={Home}
           />
           <Stack.Screen
-            name="contacs"
+            name="contacts"
             options={{ title: "Select Contacts" }}
             component={Contacts}
           />

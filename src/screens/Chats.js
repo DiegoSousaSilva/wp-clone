@@ -1,5 +1,5 @@
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text } from "react-native";
 import { auth, db } from "../../firebase";
 import ContactsFloatingIcon from "../components/ContactsFloatingIcon";
