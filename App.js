@@ -12,6 +12,7 @@ import Home from "./src/screens/Home";
 import Loading from "./src/screens/Loading";
 import Contacts from "./src/screens/Contacts";
 import SignIn from "./src/screens/SignIn";
+import Chat from "./src/screens/Chat";
 
 LogBox.ignoreLogs([
   "Setting a time",
@@ -74,6 +75,11 @@ function App() {
             name="contacts"
             options={{ title: "Select Contacts" }}
             component={Contacts}
+          />
+          <Stack.Screen
+            name="chat"
+            component={Chat}
+            options={{ title: "Chats" }}
           />
         </Stack.Navigator>
       )}

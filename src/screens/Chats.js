@@ -31,6 +31,7 @@ const Chats = () => {
     });
     return () => unsubscribe();
   }, []);
+
   function getUserB(user, contacts) {
     const userContact = contacts.find((c) => c.email === user.email);
     if (userContact && userContact.contactName) {
